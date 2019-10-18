@@ -8,6 +8,11 @@ const Users = require('../users/users.model.js');
 const secrets = require('../config/secrets.js');
 
 
+router.get('/', (req, res) => {
+  res.status(200).json({ message: "Get this test" })
+})
+
+
 router.post('/register', (req, res) => {
   // implement registration
   let user = req.body; // << bring in the entire body from the req

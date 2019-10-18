@@ -1,23 +1,22 @@
 // Imports Needed - supertest + authRouter
 const request = require('supertest');
-const auth = require('./auth-router.js');
+const server = require('../api/server');
 
 // REGISTER TEST
 
-describe('POST /register', () => {
+describe('POST /', () => {
     // sohuld return http status 200
-    it('should return 200 http status code', () => {
-        return request(auth)
-        .post('/register')
-        .then(response => {
-            expect(response.status).toBe(200);
-        })
-        .catch()
+    it('should return 200 http status code', async () => {
+
+        const call = await request(server)
+        .get('/api/auth/')
+        // console.log(call)
+        expect(call.status).toBe(200);
     });
 
     // should return json
-    test('should return json', async () => {
-        const response = await request(auth).post('/register');
+    it('should return json', async () => {
+        const response = await request(server).post('/api/auth/');
         // tomatch uses a regular expression the check the value
         expect(response.type).toMatch(/json/i);
     })
