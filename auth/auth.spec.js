@@ -2,6 +2,8 @@
 const request = require('supertest');
 const auth = require('./auth-router.js');
 
+// REGISTER TEST
+
 describe('POST /register', () => {
     // sohuld return http status 200
     it('should return 200 http status code', () => {
@@ -20,6 +22,9 @@ describe('POST /register', () => {
         expect(response.type).toMatch(/json/i);
     })
 });
+
+
+// LOGIN TEST
 
 describe('POST /login', () => {
     // sohuld return http status 200
