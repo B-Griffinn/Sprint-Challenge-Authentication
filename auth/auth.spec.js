@@ -1,6 +1,7 @@
 // Imports Needed - supertest + authRouter
 const request = require('supertest');
 const server = require('../api/server');
+const Users = require('../users/users.model');
 
 // REGISTER TEST
 
@@ -9,17 +10,20 @@ describe('POST /', () => {
     it('should return 200 http status code', async () => {
 
         const call = await request(server)
-        .get('/api/auth/')
-        // console.log(call)
-        expect(call.status).toBe(200);
+        .post('/api/auth/register')
+       .send({ username: "hell0001Test", password: "1234" })
+        console.log(call.status)
+        expect(call.status).toBe(201);
     });
 
-    // should return json
-    it('should return json', async () => {
-        const response = await request(server).post('/api/auth/');
-        // tomatch uses a regular expression the check the value
-        expect(response.type).toMatch(/json/i);
-    })
+    it('should return 500 http status code', async () => {
+
+        const call = await request(server)
+        .post('/api/auth/register')
+        console.log(call.status)
+        expect(call.status).toBe(500);
+    });
+
 });
 
 
@@ -27,19 +31,16 @@ describe('POST /', () => {
 
 describe('POST /login', () => {
     // sohuld return http status 200
-    it('should return 200 http status code', () => {
-        return request(auth)
-        .post('/login')
-        .then(response => {
-            expect(response.status).toBe(200);
-        })
-        .catch()
+    it('should return 200 http status code', async () => {
+        const call = await request(server)
+        .post('/api/auth/login')
+        .send({username: "hell0001Test", password: "1234"})
+        expect(call.status).toBe(200)
     });
 
-    // should return json
-    test('should return json', async () => {
-        const response = await request(auth).post('/login');
-        // tomatch uses a regular expression the check the value
-        expect(response.type).toMatch(/json/i);
-    })
+    it('should return 500 http status code on fail', async () => {
+        const call = await request(server)
+        .post('/api/auth/login')
+        expect(call.status).toBe(500)
+    });
 });
